@@ -11,8 +11,8 @@ styleparser.RuleSet.prototype = {
 
   getStyles(entity, tags, zoom) {
     // summary:		Find the styles for a given entity.
-    const sl = new styleparser.StyleList();
-    for (const i in this.choosers) {
+    var sl = new styleparser.StyleList();
+    for (var i in this.choosers) {
       this.choosers[i].updateStyles(entity, tags, sl, zoom);
     }
     return sl; // styleparser.StyleList
@@ -77,7 +77,7 @@ styleparser.RuleSet.prototype = {
         }
 
         css = css.replace(this.ZOOM, "");
-        const z = this.parseZoom(o[1]);
+        var z = this.parseZoom(o[1]);
         sc.currentChain().addZoomToLast(z[0], z[1]);
         sc.zoomSpecific = true;
         previous = this.oZOOM;
@@ -162,22 +162,22 @@ styleparser.RuleSet.prototype = {
   },
 
   parseDeclaration(s) {
-    const styles = [];
-    const t = {};
+    var styles = [];
+    var t = {};
     let o = {};
     let k, v;
 
     // Create styles
-    const ss = new styleparser.ShapeStyle();
-    const ps = new styleparser.PointStyle();
-    const ts = new styleparser.TextStyle();
-    const hs = new styleparser.ShieldStyle();
-    const xs = new styleparser.InstructionStyle();
+    var ss = new styleparser.ShapeStyle();
+    var ps = new styleparser.PointStyle();
+    var ts = new styleparser.TextStyle();
+    var hs = new styleparser.ShieldStyle();
+    var xs = new styleparser.InstructionStyle();
 
-    const r = s.split(";");
-    const isEval = {};
-    for (const i in r) {
-      const a = r[i];
+    var r = s.split(";");
+    var isEval = {};
+    for (var i in r) {
+      var a = r[i];
       if ((o = this.ASSIGNMENT_EVAL.exec(a))) {
         k = o[1].replace(this.DASH, "_");
         t[k] = o[2];
@@ -211,7 +211,7 @@ styleparser.RuleSet.prototype = {
         ss.interactive=ps.interactive=ts.interactive=hs.interactive=xs.interactive=inter;*/
 
     // Assign each property to the appropriate style
-    for (const a in t) {
+    for (var a in t) {
       // Parse properties
       v = t[a];
 
@@ -250,8 +250,8 @@ styleparser.RuleSet.prototype = {
 
   parseZoom(s) {
     let o = {};
-    const maxscale = 999; // TODO: hardcoded
-    const minscale = -999; // TODO: hardcoded
+    var maxscale = 999; // TODO: hardcoded
+    var minscale = -999; // TODO: hardcoded
     if ((o = this.ZOOM_MINMAX.exec(s))) {
       return [o[1], o[2]];
     } else if ((o = this.ZOOM_MIN.exec(s))) {
@@ -299,7 +299,7 @@ styleparser.RuleSet.prototype = {
     if (this.CSSCOLORS[colorStr]) {
       return this.CSSCOLORS[colorStr];
     } else {
-      const match = this.HEX.exec(colorStr);
+      var match = this.HEX.exec(colorStr);
       if (match) {
         if (match[1].length == 3) {
           // repeat digits. #abc => 0xaabbcc
