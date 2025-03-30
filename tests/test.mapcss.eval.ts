@@ -24,13 +24,13 @@ describe("mapcss.eval", () => {
     expect(p).to.equal("-1.23");
   });
   it("str()", () => {
-    var q = "str(12.3)";
-    var p = evalparser.parse(q);
+    const q = "str(12.3)";
+    const p = evalparser.parse(q);
     expect(p).to.equal("12.3");
   });
   it("number arithmetic", () => {
-    var q = "(1+2*3-4/2-1)*2";
-    var p = evalparser.parse(q);
+    const q = "(1+2*3-4/2-1)*2";
+    const p = evalparser.parse(q);
     expect(p).to.equal("8");
   });
   it("int", () => {
@@ -56,8 +56,8 @@ describe("mapcss.eval", () => {
     expect(p).to.equal("true");
   });
   it("none", () => {
-    var q = "none";
-    var p = evalparser.parse(q);
+    const q = "none";
+    const p = evalparser.parse(q);
     expect(p).to.equal("");
   });
   it("none aithmetic", () => {
