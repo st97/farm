@@ -26,7 +26,7 @@ type Preset = {
   locationSet?: {exclude?: string[]; include?: string[]};
 };
 
-const freeFormQuery = {};
+var freeFormQuery = {};
 let presets: Presets = {};
 
 export function setPresets(newPresets: Presets) {
@@ -52,7 +52,7 @@ export default function ffs_free(callback) {
   // load presets
   async function loadPresets() {
     try {
-      const {default: data} = await import(
+      var {default: data} = await import(
         "../../node_modules/@openstreetmap/id-tagging-schema/dist/presets.json"
       );
       setPresets(data);
@@ -71,7 +71,7 @@ export default function ffs_free(callback) {
       );
       if (language.length > 2 && !data[language]?.presets?.presets) {
         language = language.slice(0, 2);
-        const {default: data2} = await import(
+        var {default: data2} = await import(
           `../../node_modules/@openstreetmap/id-tagging-schema/dist/translations/${language}.json`
         );
         data = data2;
@@ -79,10 +79,10 @@ export default function ffs_free(callback) {
       data = data[language].presets.presets;
       // load translated names and terms into presets object
       Object.entries(data).forEach(([presetName, translation]) => {
-        const preset = presets[presetName];
+        var preset = presets[presetName];
         preset.translated = true;
         // save original preset name under alternative terms
-        const oriPresetName = preset.name;
+        var oriPresetName = preset.name;
         // save translated preset name
         preset.nameCased = translation.name;
         preset.name = translation.name.toLowerCase();
@@ -104,8 +104,8 @@ export default function ffs_free(callback) {
 
 freeFormQuery.get_query_clause = (condition) => {
   // search presets for ffs term
-  const search = condition.free.toLowerCase();
-  const candidates = Object.values(presets).filter((preset) => {
+  var search = condition.free.toLowerCase();
+  var candidates = Object.values(presets).filter((preset) => {
     if (preset.searchable === false) return false;
     if (preset.name === search) return true;
     preset._termsIndex = preset.terms.indexOf(search);
@@ -119,8 +119,8 @@ freeFormQuery.get_query_clause = (condition) => {
     if (b.name === search) return 1;
     return a._termsIndex - b._termsIndex;
   });
-  const preset = candidates[0];
-  const types = [];
+  var preset = candidates[0];
+  var types = [];
   preset.geometry.forEach((g) => {
     switch (g) {
       case "point":
@@ -156,13 +156,13 @@ freeFormQuery.get_query_clause = (condition) => {
 
 freeFormQuery.fuzzy_search = (condition) => {
   // search presets for ffs term
-  const search = condition.free.toLowerCase();
+  var search = condition.free.toLowerCase();
   // fuzzyness: max lev.dist allowed to still match
-  const fuzzyness = 2 + Math.floor(search.length / 7);
+  var fuzzyness = 2 + Math.floor(search.length / 7);
   function fuzzyMatch(term) {
     return levenshteinDistance(term, search) <= fuzzyness;
   }
-  const candidates = Object.values(presets).filter((preset) => {
+  var candidates = Object.values(presets).filter((preset) => {
     if (preset.searchable === false) return false;
     if (preset.name && fuzzyMatch(preset.name)) return true;
     return Array.isArray(preset.terms) && preset.terms.some(fuzzyMatch);
@@ -176,6 +176,6 @@ freeFormQuery.fuzzy_search = (condition) => {
       .reduce((a, b) => (a <= b ? a : b));
   }
   candidates.sort((a, b) => preset_weight(a) - preset_weight(b));
-  const preset = candidates[0];
+  var preset = candidates[0];
   return preset.nameCased;
 };
