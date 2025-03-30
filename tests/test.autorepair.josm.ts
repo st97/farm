@@ -7,7 +7,7 @@ describe("ide.autorepair.josm", () => {
   });
   // repair non-xml output data format: xml query
   it("repair non-xml output data format (xml query)", () => {
-    let examples = [
+    const examples = [
       {
         // basic case
         inp: '<osm-script output="json"></osm-script>',
@@ -25,8 +25,8 @@ describe("ide.autorepair.josm", () => {
       }
     ];
     vi.spyOn(ide, "getQueryLang").mockImplementation(() => "xml");
-    for (let example of examples) {
-      let setQuery = vi.spyOn(ide, "setQuery").mockImplementation(() => {});
+    for (const example of examples) {
+      const setQuery = vi.spyOn(ide, "setQuery").mockImplementation(() => {});
       vi.spyOn(ide, "getRawQuery").mockImplementation(() => example.inp);
       ide.repairQuery("xml+metadata");
       expect(setQuery).toHaveBeenCalledWith(example.outp);
@@ -35,7 +35,7 @@ describe("ide.autorepair.josm", () => {
 
   // repair non-xml output data format: ql query
   it("repair non-xml output data format (OverpassQL query)", () => {
-    let examples = [
+    const examples = [
       {
         // basic case
         inp: "[out:json];",
@@ -58,8 +58,8 @@ describe("ide.autorepair.josm", () => {
       }
     ];
     vi.spyOn(ide, "getQueryLang").mockImplementation(() => "OverpassQL");
-    for (let example of examples) {
-      let setQuery = vi.spyOn(ide, "setQuery").mockImplementation(() => {});
+    for (const example of examples) {
+      const setQuery = vi.spyOn(ide, "setQuery").mockImplementation(() => {});
       vi.spyOn(ide, "getRawQuery").mockImplementation(() => example.inp);
       ide.repairQuery("xml+metadata");
       expect(setQuery).toHaveBeenCalledWith(example.outp);
@@ -68,7 +68,7 @@ describe("ide.autorepair.josm", () => {
 
   // repair missing xml+meta infomation: xml query
   it("repair missing meta information (xml query)", () => {
-    let examples = [
+    const examples = [
       {
         // trivial case
         inp: "<print/>",
@@ -86,8 +86,8 @@ describe("ide.autorepair.josm", () => {
       }
     ];
     vi.spyOn(ide, "getQueryLang").mockImplementation(() => "xml");
-    for (let example of examples) {
-      let setQuery = vi.spyOn(ide, "setQuery").mockImplementation(() => {});
+    for (const example of examples) {
+      const setQuery = vi.spyOn(ide, "setQuery").mockImplementation(() => {});
       vi.spyOn(ide, "getRawQuery").mockImplementation(() => example.inp);
       ide.repairQuery("xml+metadata");
       expect(setQuery).toHaveBeenCalledWith(example.outp);
@@ -96,7 +96,7 @@ describe("ide.autorepair.josm", () => {
 
   // repair missing xml+meta infomation: ql query
   it("repair missing meta information (OverpassQL query)", () => {
-    let examples = [
+    const examples = [
       {
         // trivial case
         inp: "out;",
@@ -128,8 +128,8 @@ describe("ide.autorepair.josm", () => {
       }
     ];
     vi.spyOn(ide, "getQueryLang").mockImplementation(() => "OverpassQL");
-    for (let example of examples) {
-      let setQuery = vi.spyOn(ide, "setQuery").mockImplementation(() => {});
+    for (const example of examples) {
+      const setQuery = vi.spyOn(ide, "setQuery").mockImplementation(() => {});
       vi.spyOn(ide, "getRawQuery").mockImplementation(() => example.inp);
       ide.repairQuery("xml+metadata");
       expect(setQuery).toHaveBeenCalledWith(example.outp);
@@ -138,7 +138,7 @@ describe("ide.autorepair.josm", () => {
 
   // overpass complex geometries
   it("repair overpass geometry options (xml query)", () => {
-    let examples = [
+    const examples = [
       {
         // center geometry
         inp: '<print mode="meta" geometry="center"/>',
@@ -166,8 +166,8 @@ describe("ide.autorepair.josm", () => {
       }
     ];
     vi.spyOn(ide, "getQueryLang").mockImplementation(() => "xml");
-    for (let example of examples) {
-      let setQuery = vi.spyOn(ide, "setQuery").mockImplementation(() => {});
+    for (const example of examples) {
+      const setQuery = vi.spyOn(ide, "setQuery").mockImplementation(() => {});
       vi.spyOn(ide, "getRawQuery").mockImplementation(() => example.inp);
       ide.repairQuery("xml+metadata");
       expect(setQuery).toHaveBeenCalledWith(example.outp);
@@ -176,7 +176,7 @@ describe("ide.autorepair.josm", () => {
 
   // overpass complex geometries
   it("repair overpass geometry options (OverpassQL query)", () => {
-    let examples = [
+    const examples = [
       {
         // center geometry
         inp: "out meta center;",
@@ -209,8 +209,8 @@ describe("ide.autorepair.josm", () => {
       }
     ];
     vi.spyOn(ide, "getQueryLang").mockImplementation(() => "OverpassQL");
-    for (let example of examples) {
-      let setQuery = vi.spyOn(ide, "setQuery").mockImplementation(() => {});
+    for (const example of examples) {
+      const setQuery = vi.spyOn(ide, "setQuery").mockImplementation(() => {});
       vi.spyOn(ide, "getRawQuery").mockImplementation(() => example.inp);
       ide.repairQuery("xml+metadata");
       expect(setQuery).toHaveBeenCalledWith(example.outp);
@@ -219,7 +219,7 @@ describe("ide.autorepair.josm", () => {
 
   // do not repair statements in comments
   it("do not repair statements in comments (xml query)", () => {
-    let examples = [
+    const examples = [
       {
         // <print> in xml comment
         inp: "<!--<print/>-->",
@@ -232,8 +232,8 @@ describe("ide.autorepair.josm", () => {
       }
     ];
     vi.spyOn(ide, "getQueryLang").mockImplementation(() => "xml");
-    for (let example of examples) {
-      let setQuery = vi.spyOn(ide, "setQuery").mockImplementation(() => {});
+    for (const example of examples) {
+      const setQuery = vi.spyOn(ide, "setQuery").mockImplementation(() => {});
       vi.spyOn(ide, "getRawQuery").mockImplementation(() => example.inp);
       ide.repairQuery("xml+metadata");
       expect(setQuery).toHaveBeenCalledWith(example.outp);
@@ -242,7 +242,7 @@ describe("ide.autorepair.josm", () => {
 
   // do not repair statements in comments
   it("do not repair statements in comments (overpassQL query)", () => {
-    let examples = [
+    const examples = [
       {
         // multiline comment
         inp: "/*out;*/",
@@ -255,8 +255,8 @@ describe("ide.autorepair.josm", () => {
       }
     ];
     vi.spyOn(ide, "getQueryLang").mockImplementation(() => "OverpassQL");
-    for (let example of examples) {
-      let setQuery = vi.spyOn(ide, "setQuery").mockImplementation(() => {});
+    for (const example of examples) {
+      const setQuery = vi.spyOn(ide, "setQuery").mockImplementation(() => {});
       vi.spyOn(ide, "getRawQuery").mockImplementation(() => example.inp);
       ide.repairQuery("xml+metadata");
       expect(setQuery).toHaveBeenCalledWith(example.outp);
