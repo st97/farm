@@ -14,7 +14,7 @@ export default function urlParameters(
   callback?: (err: unknown, result: ReturnType<typeof urlParameters>) => void
 ) {
   // defaults
-  var t = {
+  const t = {
     has_query: false,
     query: null as string | null,
     has_coords: false,
@@ -25,7 +25,7 @@ export default function urlParameters(
   };
 
   // split parameter string
-  var args = parseUrlParameters(param_str);
+  const args = parseUrlParameters(param_str);
 
   // interpret arguments
   if (args.has("q")) {
@@ -40,11 +40,11 @@ export default function urlParameters(
   }
   if (args.has("c")) {
     // map center & zoom (compressed)
-    var tmp = args.get("c").match(/([A-Za-z0-9\-_]+)([A-Za-z0-9\-_])/);
+    const tmp = args.get("c").match(/([A-Za-z0-9\-_]+)([A-Za-z0-9\-_])/);
     if (!tmp) {
       console.warn(`Skipping invalid [${args.get("c")}]`);
     } else {
-      var coords_cpr = Base64.decodeNum(tmp[1]);
+      const coords_cpr = Base64.decodeNum(tmp[1]);
       t.coords = {
         lat: (coords_cpr % (180 * 100000)) / 100000 - 90,
         lng: Math.floor(coords_cpr / (180 * 100000)) / 100000 - 180
@@ -56,7 +56,7 @@ export default function urlParameters(
   }
   if (args.has("C")) {
     // map center & zoom (uncompressed)
-    var tmp = args.get("C").match(/(-?[\d.]+);(-?[\d.]+);(\d+)/);
+    const tmp = args.get("C").match(/(-?[\d.]+);(-?[\d.]+);(\d+)/);
     if (!tmp) {
       console.warn(`Skipping invalid [${args.get("C")}]`);
     } else {
@@ -79,12 +79,12 @@ export default function urlParameters(
   let wizard_comment = "";
   if (args.has("template")) {
     // load a template
-    var template = settings.saves[args.get("template")];
+    const template = settings.saves[args.get("template")];
     if (template && template.type == "template") {
       // build query
       let q = template.wizard;
-      var params = template.parameters;
-      for (var param of params) {
+      const params = template.parameters;
+      for (const param of params) {
         let value = args.get(param);
         if (typeof value !== "string") value = "???";
         q = q.replace(`{{${param}}}`, quotes(value));
