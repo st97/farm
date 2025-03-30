@@ -31,7 +31,7 @@ describe("ide.query", () => {
   // expand {{parameters}} in ql query
   it("expand {{parameters}} in ql query", async () => {
     vi.spyOn(ide, "setQuery").mockImplementation(() => {});
-    const examples = [
+    var examples = [
       {
         // simple expansion
         inp: "{{parameter=foo}};{{parameter}}",
@@ -48,7 +48,7 @@ describe("ide.query", () => {
         outp: ";foofoo"
       }
     ];
-    for (const example of examples) {
+    for (var example of examples) {
       ide.codeEditor.getValue = () => example.inp;
       await expect(ide.getQuery()).resolves.toBe(example.outp);
     }
@@ -56,7 +56,7 @@ describe("ide.query", () => {
   // expand {{parameters}} in xml query
   it("expand {{parameters}} in xml", async () => {
     vi.spyOn(ide, "setQuery").mockImplementation(() => {});
-    const examples = [
+    var examples = [
       {
         // simple expansion
         inp: "{{parameter=foo}}<xml>{{parameter}}</xml>",
@@ -73,7 +73,7 @@ describe("ide.query", () => {
         outp: "<xml>foofoo</xml>"
       }
     ];
-    for (const example of examples) {
+    for (var example of examples) {
       ide.codeEditor.getValue = () => example.inp;
       await expect(ide.getQuery()).resolves.toBe(example.outp);
     }
@@ -81,7 +81,7 @@ describe("ide.query", () => {
   // expand {{bbox}}
   it("expand {{bbox}}", async () => {
     vi.spyOn(ide, "setQuery").mockImplementation(() => {});
-    const examples = [
+    var examples = [
       {
         // ql query
         inp: "({{bbox}})",
@@ -98,7 +98,7 @@ describe("ide.query", () => {
         outp: '<osm-script bbox="1,2,3,4"/>'
       }
     ];
-    for (const example of examples) {
+    for (var example of examples) {
       ide.codeEditor.getValue = () => example.inp;
       await expect(ide.getQuery()).resolves.toBe(example.outp);
     }
@@ -106,7 +106,7 @@ describe("ide.query", () => {
   // expand {{center}}
   it("expand {{center}}", async () => {
     vi.spyOn(ide, "setQuery").mockImplementation(() => {});
-    const examples = [
+    var examples = [
       {
         // ql query
         inp: "({{center}})",
@@ -118,7 +118,7 @@ describe("ide.query", () => {
         outp: '<around lat="5" lon="6"/>'
       }
     ];
-    for (const example of examples) {
+    for (var example of examples) {
       ide.codeEditor.getValue = () => example.inp;
       await expect(ide.getQuery()).resolves.toBe(example.outp);
     }
