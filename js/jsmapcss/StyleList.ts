@@ -26,7 +26,7 @@ styleparser.StyleList.prototype = {
 
   hasFills() {
     // summary:		Does this StyleList contain any styles with a fill?
-    for (var s in this.shapeStyles) {
+    for (const s in this.shapeStyles) {
       if (
         !isNaN(this.shapeStyles(s).fill_color) ||
         this.shapeStyles(s).fill_image
@@ -38,7 +38,7 @@ styleparser.StyleList.prototype = {
 
   layerOverride() {
     // summary:		If this StyleList manually forces an OSM layer, return it, otherwise null.
-    for (var s in this.shapeStyles) {
+    for (const s in this.shapeStyles) {
       if (!isNaN(this.shapeStyles[s].layer)) return this.shapeStyles[s].layer;
     }
     return NaN;
@@ -76,25 +76,25 @@ styleparser.StyleList.prototype = {
   },
 
   hasShapeStyles() {
-    for (var a in this.shapeStyles) {
+    for (const a in this.shapeStyles) {
       return true;
     }
     return false;
   },
   hasTextStyles() {
-    for (var a in this.textStyles) {
+    for (const a in this.textStyles) {
       return true;
     }
     return false;
   },
   hasPointStyles() {
-    for (var a in this.pointStyles) {
+    for (const a in this.pointStyles) {
       return true;
     }
     return false;
   },
   hasShieldStyles() {
-    for (var a in this.shieldStyles) {
+    for (const a in this.shieldStyles) {
       return true;
     }
     return false;
