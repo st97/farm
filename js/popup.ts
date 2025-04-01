@@ -7,7 +7,7 @@ var _tag2link = tag2link.filter(
 );
 
 export function featurePopupContent(feature: GeoJSON.Feature) {
-  let popup = "";
+  const popup = "";
   if (feature.properties.type == "node")
     popup +=
       `<h4 class="title is-4"><span class="t" data-t="popup.node">Node</span>` +
@@ -44,7 +44,7 @@ export function featurePopupContent(feature: GeoJSON.Feature) {
       k = htmlentities(k); // escaping strings!
       v = htmlentities(v);
       // hyperlinks for http,https and ftp URLs
-      let urls;
+      const urls;
       if (
         (urls = v.match(
           /\b((?:(https?|ftp):\/\/|www\d{0,3}[.]|[a-z0-9.-]+[.][a-z]{2,4}\/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()[\]{};:'".,<>?«»“”‘’]))/gi
@@ -62,7 +62,7 @@ export function featurePopupContent(feature: GeoJSON.Feature) {
         );
       }
       // hyperlinks for wikipedia entries
-      let wiki_lang, wiki_page;
+      const wiki_lang, wiki_page;
       if (
         ((wiki_lang = k.match(/^wikipedia:(.*)$/)) && (wiki_page = v)) ||
         (k.match(/(^|:)wikipedia$/) &&
@@ -83,14 +83,14 @@ export function featurePopupContent(feature: GeoJSON.Feature) {
             `<a href="//www.wikidata.org/wiki/${q}" target="_blank">${q}</a>`
         );
       // hyperlinks for wikimedia-commons entries
-      let wikimediacommons_page;
+      const wikimediacommons_page;
       if (
         k == "wikimedia_commons" &&
         (wikimediacommons_page = v.match(/^(Category|File):(.*)/))
       )
         v = `<a href="//commons.wikimedia.org/wiki/${wikimediacommons_page[1]}:${wikimediacommons_page[2]}" target="_blank">${v}</a>`;
       // hyperlinks for mapillary entries
-      let mapillary_page;
+      const mapillary_page;
       if (
         (k == "mapillary" && (mapillary_page = v.match(/^[-a-zA-Z0-9_]+$/))) ||
         (k.match(/^mapillary:/) &&
