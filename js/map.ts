@@ -13,19 +13,19 @@ import {parseUrlParameters} from "./urlParameters";
 
 $(document).ready(() => {
   // main map cache
-  var cache = {};
+  const cache = {};
 
   window.addEventListener(
     "message",
     async (evt) => {
-      var data = typeof evt.data === "string" ? JSON.parse(evt.data) : {};
+      const data = typeof evt.data === "string" ? JSON.parse(evt.data) : {};
       if (data.cmd === "update_map") {
         settings.code["overpass"] = data.value[0];
         ide.update_map();
       } else if (data.cmd === "cache") {
         settings.code["overpass"] = data.value[0];
-        var query = await ide.getQuery();
-        var query_lang = ide.getQueryLang();
+        const query = await ide.getQuery();
+        const query_lang = ide.getQueryLang();
         overpass.run_query(
           query,
           query_lang,
@@ -44,7 +44,7 @@ $(document).ready(() => {
     alert(`error :( ${$(this).html()}`);
   };
   configs.appname = "overpass-ide-map";
-  var settings = {
+  const settings = {
     code: {},
     server: configs.defaultServer,
     tileServer: configs.defaultTiles,
@@ -52,12 +52,12 @@ $(document).ready(() => {
     force_simple_cors_request: true,
     disable_poiomatic: false
   };
-  var ide = {
+  const ide = {
     map: undefined as unknown as L.Map,
     mapcss: "",
     async getQuery(): Promise<string> {
       let query = settings.code["overpass"];
-      var queryParser = new Query();
+      const queryParser = new Query();
       query = await queryParser.parse(query, {});
       // parse mapcss declarations
       let mapcss = "";
@@ -69,11 +69,11 @@ $(document).ready(() => {
       if (queryParser.hasStatement("data")) {
         data_source = queryParser.getStatement("data");
         data_source = data_source.split(",");
-        var data_mode = data_source[0].toLowerCase();
+        const data_mode = data_source[0].toLowerCase();
         data_source = data_source.slice(1);
-        var options = {};
-        for (var src of data_source) {
-          var tmp = src.split("=");
+        const options = {};
+        for (const src of data_source) {
+          const tmp = src.split("=");
           options[tmp[0]] = tmp[1];
         }
         data_source = {
@@ -96,8 +96,8 @@ $(document).ready(() => {
       $("#data_stats").remove();
       if (typeof overpass.osmLayer != "undefined")
         ide.map.removeLayer(overpass.osmLayer);
-      var query = await ide.getQuery();
-      var query_lang = ide.getQueryLang();
+      const query = await ide.getQuery();
+      const query_lang = ide.getQueryLang();
       overpass.run_query(
         query,
         query_lang,
@@ -121,18 +121,18 @@ $(document).ready(() => {
     ).dialog({modal: true});
   }
   // check for any get-parameters
-  var params = parseUrlParameters();
+  const params = parseUrlParameters();
   // uncompressed query set in url
   settings.code["overpass"] = params.get("Q");
   // don't alert on overpass errors, but send messages to parent window
   settings.silent = params.has("silent");
   // init leaflet
   ide.map = new L.Map("map");
-  var tilesUrl = settings.tileServer;
-  var tilesAttrib = configs.tileServerAttribution;
-  var tiles = new L.TileLayer(tilesUrl, {attribution: tilesAttrib});
+  const tilesUrl = settings.tileServer;
+  const tilesAttrib = configs.tileServerAttribution;
+  const tiles = new L.TileLayer(tilesUrl, {attribution: tilesAttrib});
   ide.map.setView([0, 0], 1).addLayer(tiles);
-  var scaleControl = new L.Control.Scale({metric: true, imperial: false});
+  const scaleControl = new L.Control.Scale({metric: true, imperial: false});
   scaleControl.addTo(ide.map);
   // wait spinner
   $(document).on({
